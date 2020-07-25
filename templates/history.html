@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>History of last 50 irrigation actions</h1>
+  <table class="table table-striped">
+    <tr>
+      <th>Where?</th>
+      <th style="text-align:center">Why finished?</th>
+      <th>Irrigation Start</th>
+      <th>Irrigation End</th>
+      <th>How long?</th>
+      <th>Irrigation ID</th>
+      <th>Timer ID</th>
+    </tr>
+    {% for action in actions %}
+    <tr>
+      <td ALIGN="LEFT">{{action.relais_name  }}</td>
+      {% if (action.action_status==2) %}
+        <td ALIGN="CENTER"><span class="badge progress-bar-success">{{action.status_value  }}</span></td>
+      {% else %}
+        <td ALIGN="CENTER"><span class="badge progress-bar-danger">{{action.status_value  }}</span></td>
+      {% endif %}
+      <td ALIGN="LEFT">{{action.action_start  }}</td>
+      <td ALIGN="LEFT">{{action.action_end  }}</td>
+      <td ALIGN="LEFT">{{(action.action_end - action.action_start) }}</td>
+      <td ALIGN="LEFT">{{action.action_id  }}</td>
+      <td ALIGN="LEFT">{{action.timer_id  }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

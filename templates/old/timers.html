@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>Timers</h1>
+  <ul class="list-group">
+    {% for timer in timers %}
+      <li class="list-group-item"><a href="timer/{{timer.timer_id}}">{{timer.relais_name}}</a></li>
+      <a class="btn btn-success" href="timer/{{timer.timer_id}}">{{timer.relais_name}}</a>
+    {% endfor %}
+  </ul>
+{% endblock %}

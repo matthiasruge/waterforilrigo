@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>Add_Timer</h1>
+  {% from "includes/_formhelpers.html" import render_field %}
+  <form method="POST"  action="">
+    <div class="form-group">
+      {{ render_field(form.timer_start, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.timer_end, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.relais_id, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.interrupt_hours, class_="form-control") }}
+    </div>
+    <p><input class="btn btn-primary" type="submit" value="Submit">
+  </form>
+  <hr>
+  <table class="table table-striped">
+    <tr>
+      <th>Relais ID</th>
+      <th>Where?</th>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Giardino</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Orto</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Tubo</td>
+    </tr>
+{% endblock %}

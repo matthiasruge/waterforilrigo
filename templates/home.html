@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="jumbotron text-center">
+  <h2>Welcome To "Water For Il Rigo"</h2>
+  <p class="lead">This app collects and distributes water for the irriagtion purpose</p>
+  <hr>
+  <table class="table table-striped">
+    <tr>
+      <th>Cistern Name</th>
+      <th>Volume available</th>
+      <th>Status</th>
+    </tr>
+    {% for level in levels %}
+    <tr>
+      <td ALIGN="LEFT"><a href="status/{{level.cistern_id}}">{{level.cistern_name}}</a></td>
+      <td ALIGN="LEFT">{{(level.cistern_depth - level.level_value)/level.cistern_depth*level.cistern_vol}} m³</td>
+      <td ALIGN="LEFT">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="{{(level.cistern_depth - level.level_value)/level.cistern_depth*100}}%;"
+          aria-valuemin="0" aria-valuemax="100" style="width:{{(level.cistern_depth - level.level_value)/level.cistern_depth*100}}%">
+            {{(level.cistern_depth - level.level_value)/level.cistern_depth*100}}%</span>
+          </div>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+<!--{% if session.logged_in == NULL %}-->
+<!--  <a href="/register" class="btn btn-primary btn-lg">Register</a>-->
+<!--  <a href="/login" class="btn btn-success">Login</a>-->
+<!--{% endif %}-->
+</div>
+{% endblock %}

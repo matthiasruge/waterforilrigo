@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h2>Dashboard <small> Welcome {{session.username}}</small><a ALIGN="RIGHT" class="btn btn-success pull-right" href="/add_timer"> Add Timer</a></h2>
+  <hr>
+  <table class="table table-striped">
+    <tr>
+      <th>Where?</th>
+      <th>Timer Start</th>
+      <th>Timer End</th>
+      <th>Repeat every (hours)</th>
+      <th style="text-align:center">Timer status</th>
+      <th>Timer Author</th>
+            <th></th>
+      <th></th>
+    </tr>
+    {% for timer in timers %}
+      <tr>
+        <td>{{timer.relais_name}}</td>
+        <td>{{timer.timer_start}}</td>
+        <td>{{timer.timer_end}}</td>
+        <td>{{timer.interrupt_hours}}</td>
+        {% if (timer.timer_status==1) %}
+          <td ALIGN="CENTER"><span class="badge progress-bar-warning">{{timer.status_value  }}</span></td>
+        {% elif (timer.timer_status==2) %}
+          <td ALIGN="CENTER"><span class="badge progress-bar-success">{{timer.status_value  }}</span></td>
+        {% elif (timer.timer_status==3) %}
+          <td ALIGN="CENTER"><span class="badge progress-bar-danger">{{timer.status_value  }}</span></td>
+        {% elif (timer.timer_status==6) %}
+          <td ALIGN="CENTER"><span class="badge progress-bar-success">{{timer.status_value  }}</span></td>
+        {% else %}
+          <td ALIGN="CENTER"><span class="badge progress-bar-info">{{timer.status_value  }}</span></td>
+        {% endif %}
+        <td>{{timer.timer_user}}</td>
+        <td><a href="edit_timer/{{timer.timer_id}}" class="btn btn-default pull-right">Edit</a></td>
+        <td>
+          <form action="{{url_for('delete_timer', id=timer.timer_id)}}" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="submit" value="Delete" class="btn btn-danger">
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  <hr>
+{% endblock %}

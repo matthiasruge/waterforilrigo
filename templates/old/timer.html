@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% block body %}
+  <h1>Timer "{{timer.relais_name}}"</h1>
+  <small>Created or last changed by {{timer.timer_user}}</small>
+  <hr>
+  <div>
+    starts at {{timer.timer_start}} and ends at {{timer.timer_end}}
+    {{timer.relais_type | safe}}
+  </div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h2>Irrigating Il Rigo</h2>
+  <table class="table table-striped">
+    <tr>
+      {% for i in relais %}
+        {% set ns = namespace (buttonstatus = "enabled") %} <!--using "namespace" a variable gets accessible outside of a function! Normaly a variable is only valid INSIDE of a function-->
+        {% for action in actions %}
+          {% if action.relais_id==i.relais_id %}
+            {% set ns.buttonstatus = "disabled" %}
+          {% endif %}
+        {% endfor %}
+      <td ALIGN="CENTER"><a class="btn btn-success btn-lg {{ ns.buttonstatus }}" href="irrigate/{{i.relais_id}}">{{i.relais_name}}</a></td>
+      {% endfor %}
+    </tr>
+<!--    <tr>
+      <td ALIGN="CENTER"><a class="btn btn-success" href="/add_action_giardino">Start irrigation for 30min</a></td>
+      <td ALIGN="CENTER"><a class="btn btn-success" href="/add_action_orto">Start irrigation for 30min</a></td>
+      <td ALIGN="CENTER"><a class="btn btn-success" href="/add_action_tubo">Start irrigation for 30min</a></td>
+      <td ALIGN="CENTER"><a class="btn btn-success" disabled/enabled href="/add_action_tubo">Start irrigation for 30min</a></td>
+</tr>-->
+    <tr>
+      {% for i in relais %}
+        {% set ns = namespace (buttonstatus = "enabled") %} <!--using "namespace" a variable gets accessible outside of a function! Normaly a variable is only valid INSIDE of a function-->
+        {% for action in actions %}
+          {% if action.relais_id==i.relais_id %}
+            {% set ns.buttonstatus = "disabled" %}
+          {% endif %}
+        {% endfor %}
+      <td ALIGN="CENTER"><a class="btn btn-outline-success btn-lg {{ ns.buttonstatus }}"  href="add_action/{{i.relais_id}}">Start irrigation for 30 min</a></td>
+      {% endfor %}
+    </tr>
+  </table>
+  <hr>
+<h3>Ongoing irrigation actions</h3>
+  <table class="table table-striped">
+    <tr>
+      <th>Where?</th>
+      <th>Why?</th>
+      <th>How long?</th>
+      <th>Irrigation Start</th>
+      <th>Irrigation End</th>
+      <th>Irrigation ID</th>
+    </tr>
+    {% for action in actions %}
+    <tr>
+      <td ALIGN="LEFT">{{action.relais_name  }}</td>
+      <td ALIGN="LEFT">{{action.status_value  }}</td>
+      <td ALIGN="LEFT">{{(action.action_end - action.action_start) }}</td>
+      <td ALIGN="LEFT">{{action.action_start  }}</td>
+      <td ALIGN="LEFT">{{action.action_end  }}</td>
+      <td ALIGN="LEFT">{{action.action_id  }}</td>
+      <td>
+        <form action="{{url_for('delete_action', id=action.action_id)}}" method="post">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="submit" value="Delete" class="btn btn-danger">
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
